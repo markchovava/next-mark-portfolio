@@ -1,4 +1,5 @@
 "use client"
+import { useEffect, useState } from 'react';
 import { PERSONAL_INFO } from '../data/cvData';
 import { usePortfolioStore } from '../store/usePortfolioStore';
 import { sounds } from '../utils/sound';
@@ -6,6 +7,11 @@ import { FiArrowUp, FiFileText, FiMail, FiPhone, FiMapPin } from 'react-icons/fi
 
 export const Footer: React.FC = () => {
   const { openCvModal, soundEnabled } = usePortfolioStore();
+  const [currentYear, setCurrentYear] = useState<number>(2026); // Fallback static year for SSR
+
+  useEffect(() => {
+    setCurrentYear(new Date().getFullYear());
+  }, []);
 
   const scrollToTop = () => {
     if (soundEnabled) sounds.playPop(580);
@@ -78,7 +84,7 @@ export const Footer: React.FC = () => {
 
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-400 font-mono">
           <div>
-            © {new Date().getFullYear()} Mark C. Chovava. All rights reserved.
+            © {currentYear} Mark C. Chovava. All rights reserved.
           </div>
           <div className="flex items-center gap-2">
             <span>Next.js</span>
